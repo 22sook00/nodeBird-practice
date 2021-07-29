@@ -1,0 +1,38 @@
+next 는 서버사이드렌더링을 쉽게해준다.
+
+1. npm i next 로 설치한다. (항상 최신버전 설치)
+만약 특정 버전을 원한다면 npm i next9 라고 하면 된다.
+
+2. package.json 에서 script > test 부분은 "dev": "next", 로 바꾸도록 한다.
+3. ** npm run dev 하면 실행. ***
+-> 폴더명 반드시 pages 여야 한다.
+
+4. 도중에 페이지를 새로 늘리면 인식을 못할 경우가 있다.
+-> 페이지를 껐다가 키면 빌드해준다.
+
+5. []대괄호로 감싸서 만드는 동적 라우팅기능
+-> [name].js
+
+6. 컴포넌트 
+npm i prop-types : props 로 넘기는애들은 prop-types 로 검사해주는 것.
+리액트에서의 노드는 리턴안에 들어가는 노드들.(노드.js 가 아님.)
+
+7. 리액트는 라우터를 썼지만 next.js 에서는 자체적인 라우터기능이 있다.
+-> import Link from 'next/link'
+-> "eslint": "^7.31.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-react-hooks": "^4.2.0"
+    받아주는 이유는 개발자들끼리 한사람이 코딩한것처럼 코드 통일성 위해서.
+    코드룰을 정해준다. 누구는 ; 세미콜론 붙이고 안붙이는 사람이 있는것처럼, 그런걸 다 통일.
+=> .eslintrc 라는 파일을 만들어준다. (json 형태 )확장자는 없다. 
+
+Ant Design (중국산) vs Styled-components
+Ant Design 은 기본 템플릿이 있어서 가져다쓰기만 하면 된다.(부트스트랩같은 .. )
+단점 : 너무 획일화 되있다. 개성이 없다. 
+그래서 디자이너가 있는 고객이 많은 서비스에서는 쓰지 않는다. 
+styled-components -> emotion 으로 넘어가는 추세.
+그래도 styled-component도 많이 쓴다. 
+
+npm i antd styled-components @ant-design/icons
+
+icons 는 용량 많이 잡아먹기 떄문에 따로 빼놓은 경우가 많음.
