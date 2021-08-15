@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 //RegExr 사이트에서 확인 후 복붙, split 은 () 붙여줘야 제대로 나온다. 
 const PostCardContent = ({postData}) => { 
   return <div>
-    {postData.split(/(#[^\s#]+)/g).map((el)=>{
+    {postData.split(/(#[^\s#]+)/g).map((el,idx)=>{
       if(el.match(/(#[^\s#]+)/g)){
-        return <Link href = {`/hashtag/${el.slice(1)}`}><a>{el}</a></Link>
+        return <Link href = {`/hashtag/${el.slice(1)}`} key = {idx}><a>{el}</a></Link>
       }
       return el;
     })}
