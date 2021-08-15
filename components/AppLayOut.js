@@ -1,10 +1,12 @@
-import React , {useMemo, useState} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Menu,Input,Row,Col } from 'antd';
-import UserProfile from './UserProfile'
+import {useSelector} from 'react-redux'
+import {createGlobalStyle} from 'styled-components'
+
 import LoginForm from './LoginForm'
+import UserProfile from './UserProfile'
 
 //앤트디자인은 grid 지원해준다 : Row,Col
 //1/가로먼저 자르고 세로를 잘라준다.
@@ -15,30 +17,40 @@ import LoginForm from './LoginForm'
 //antd 에서 스타일드 컴포넌트 적용하기 styled(__)`` : inline 스타일처리르 하면 리렌더링 할때 최적화가 되지 않는다. 
 //만약 useMemo : 값을 캐싱하는것. , styled-components 를 안쓰고싶다면 useMemo
 //const style = useMemo(()=>{{marginTop:10}},[])
+const Global = createGlobalStyle`
+  .ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  
+  .ant-col:first-child {
+      padding-left: 0 !important;
+  }
+  
+  .ant-col:last-child {
+    padding-right: 0 !important;
+  }
+`;
 
-const Searchinput = styled(Input.Search)`
-  vertical-align :'middle'
-`
-
-const AppLayOut = ({children}) => {
-
-  const [isLoggedIn , setIsLoggedIn] = useState(false)
-
+const AppLayOut = ({ children }) => {
+  const { isLoggedIn } = useSelector(state => state.user);
+  
   return (
     <div>
+      <Global/>
       <Menu mode = 'horizontal'>
 
-        <Menu.Item>
+        <Menu.Item key = 'home'>
         <Link href = '/'><a>노드버드</a></Link>
         </Menu.Item>
 
-        <Menu.Item>
+        <Menu.Item key ='profile'>
         <Link href = '/profile'><a>프로필</a></Link>
         </Menu.Item>
 
-        <Menu.Item>
+        <Menu.Item key = 'mail'>
           {/*해시태그 설정 : Input.search , antd에서 styled-components 는 어떻게 할까?*/}
-        <Searchinput enterButton />
+          <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
         </Menu.Item>
 
         <Menu.Item>
@@ -48,7 +60,9 @@ const AppLayOut = ({children}) => {
       
       <Row gutter = {8}>
           <Col xs = {24} sm = {6} md = {6}>
-            { isLoggedIn ? <UserProfile setIsLoggedIn ={setIsLoggedIn}/> : <LoginForm setIsLoggedIn = {setIsLoggedIn}/> }
+          {isLoggedIn
+            ? <UserProfile />
+            : <LoginForm />}
           </Col>
           <Col xs = {24} md = {12}>
             {children}
@@ -61,7 +75,7 @@ const AppLayOut = ({children}) => {
   )
 };
 AppLayOut.propTypes = {
-  children : PropTypes.node.isRequired
-}
+  children: PropTypes.node.isRequired,
+};
 
 export default AppLayOut;
